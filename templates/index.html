@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Terry Ecom Link Checker</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        input[type="text"] { width: 400px; padding: 8px; }
+        button { padding: 8px 16px; }
+        h2 { margin-top: 40px; }
+        ul { max-height: 200px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <h1>Terry Ecom Link Checker</h1>
+    <form method="post">
+        <label>Enter Website URL:</label><br><br>
+        <input type="text" name="url" placeholder="https://yourshopifystore.com" required>
+        <button type="submit">Start Crawl</button>
+    </form>
+
+    {% if results %}
+        <h2>Results for {{ results.start_url }}</h2>
+        <p>⏱️ Time: {{ results.elapsed }}s</p>
+        <p>✅ Pages Scanned: {{ results.pages_scanned }}</p>
+
+        <h3>🔗 Outbound Links ({{ results.outbound_links|length }})</h3>
+        <ul>
+            {% for link in results.outbound_links %}
+                <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <h3>❌ Broken Links ({{ results.broken_links|length }})</h3>
+        <ul>
+            {% for link in results.broken_links %}
+                <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
